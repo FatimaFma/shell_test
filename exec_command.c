@@ -28,7 +28,11 @@ void execve_cmd(char **argv)
 			{
 				if (execve(real_command, argv, NULL) == -1)
 				{
-					free(argv);
+					for (i = 1; argv[i] != NULL; i++)
+					{
+						free(argv[i]);
+					}
+					free(real_command);
 					perror("Error");
 					exit(EXIT_FAILURE);
 				}
@@ -38,5 +42,6 @@ void execve_cmd(char **argv)
 				wait(NULL);
 			}
 		}
+		free(real_command);
 	}
 }
