@@ -15,6 +15,7 @@ int main(__attribute__((unused))int ac, char **argv)
 	char *buff_copy = NULL;
 	size_t n = 0;
 	ssize_t characters;
+	int i;
 
 	while (1)
 	{
@@ -50,11 +51,14 @@ int main(__attribute__((unused))int ac, char **argv)
 		{
 			argv = parsing_cmd(buff, buff_copy);
 			execve_cmd(argv);
+			for (i = 1; argv[i] != NULL; i++)
+			{
+				free(argv[i]);
+			}
 		}
 	}
 	free(buff_copy);
 	free(buff);
-	free(argv);
 	return (0);
 }
 /**

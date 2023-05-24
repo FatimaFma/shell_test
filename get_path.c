@@ -28,7 +28,6 @@ char *get_path(char *command)
 			if (fpath == NULL)
 			{
 				free(fpath);
-				free(path_copy);
 			}
 			_strcpy(fpath, path_token);
 			_strcat(fpath, "/");
@@ -45,6 +44,8 @@ char *get_path(char *command)
 				path_token = strtok(NULL, ":");
 			}
 		}
+		free(path_copy);
+		free(fpath);
 		if (stat(command, &buffer) == 0)
 			return (command);
 		return (NULL);
