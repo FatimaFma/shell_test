@@ -60,10 +60,11 @@ char *_strcpy(char *dest, char *src)
 		i++;
 		count++;
 	}
-	for (j = 0 ; j <= count; j++)
+	for (j = 0 ; j < count; j++)
 	{
 		dest[j] = src[j];
 	}
+	dest[count] = '\0';
 	return (dest);
 }
 

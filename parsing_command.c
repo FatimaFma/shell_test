@@ -28,7 +28,7 @@ char **parsing_cmd(char *buff, char *buff_copy)
 			free(argv[i]);
 	for (i = 0; i < token_count - 1; i++)
 	{
-		argv[i] = malloc(sizeof(char) * _strlen(token));
+		argv[i] = malloc(sizeof(char) * _strlen(token) + 1);
 		_strcpy(argv[i], token);
 		token = strtok(NULL, s);
 	}
