@@ -9,12 +9,14 @@ int _e_check(char *buff);
  *
  * Return: Always 0.
  */
-int main(__attribute__((unused))int ac, char **argv)
+int main(__attribute__((unused))int ac, char **argvs)
 {
-	char *buff = NULL;
 	char *buff_copy = NULL;
+	char *buff = NULL;
+	char **argv = NULL;
 	size_t n = 0;
 	ssize_t characters;
+	int i = 0;
 
 	while (1)
 	{
@@ -43,6 +45,12 @@ int main(__attribute__((unused))int ac, char **argv)
 		{
 			free(buff_copy);
 			free(buff);
+			if (argv)
+			  {
+			    for (i = 0 ; argv[i] ; i++)
+			      free(argv[i]);
+			    free(argv);
+			  }
 			exit(0);
 			break;
 		}
@@ -54,7 +62,7 @@ int main(__attribute__((unused))int ac, char **argv)
 	}
 	free(buff_copy);
 	free(buff);
-	free(argv);
+
 	return (0);
 }
 /**
