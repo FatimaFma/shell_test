@@ -18,6 +18,9 @@ int main(__attribute__((unused))int ac, char **argvs)
 	ssize_t characters;
 	int i = 0;
 
+	int i;
+
+
 	while (1)
 	{
 		if (isatty(0))
@@ -58,11 +61,14 @@ int main(__attribute__((unused))int ac, char **argvs)
 		{
 			argv = parsing_cmd(buff, buff_copy);
 			execve_cmd(argv);
+			for (i = 1; argv[i] != NULL; i++)
+			{
+				free(argv[i]);
+			}
 		}
 	}
 	free(buff_copy);
 	free(buff);
-
 	return (0);
 }
 /**
