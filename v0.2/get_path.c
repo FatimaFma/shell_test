@@ -7,12 +7,9 @@
  */
 char *get_path(char *command)
 {
-	char *path;
-	char *path_copy;
-	int len;
+	char *path, *fpath, *path_copy;
+	int len, dir_len;
 	char *path_token;
-	int dir_len;
-	char *fpath;
 	struct stat buffer;
 
 	path = _getenv("PATH");
@@ -20,11 +17,13 @@ char *get_path(char *command)
 	{
 		path_copy = _strdup(path);
 		len = _strlen(command);
-		path_token = strtok(path_copy, ":");
+		path_token = _strtok(path_copy, ":");
 		while (path_token != NULL)
 		{
 			dir_len = _strlen(path_token);
 			fpath = malloc(len + dir_len + 2);
+			if (fpath == NULL)
+				free(fpath);
 			_strcpy(fpath, path_token);
 			_strcat(fpath, "/");
 			_strcat(fpath, command);
@@ -37,7 +36,7 @@ char *get_path(char *command)
 			else
 			{
 				free(fpath);
-				path_token = strtok(NULL, ":");
+				path_token = _strtok(NULL, ":");
 			}
 		}
 		free(path_copy);
