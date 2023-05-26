@@ -45,10 +45,10 @@ char *get_path(char *command)
 			}
 		}
 		free(path_copy);
-		free(fpath);
 		if (stat(command, &buffer) == 0)
 			return (command);
 		return (NULL);
 	}
 	return (NULL);
 }
+

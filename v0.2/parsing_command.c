@@ -14,15 +14,15 @@ char **parsing_cmd(char *buff, char *buff_copy)
 	int i;
 	char **argv;
 
-	token = strtok(buff, s);
+	token = _strtok(buff, s);
 	while (token != NULL)
 	{
 		token_count++;
-		token = strtok(NULL, s);
+		token = _strtok(NULL, s);
 	}
 	token_count++;
 	argv = malloc(sizeof(char *) * token_count);
-	token = strtok(buff_copy, s);
+	token = _strtok(buff_copy, s);
 	if (token == NULL)
 		for (i = 1 ; argv[i] ; i++)
 			free(argv[i]);
@@ -30,7 +30,7 @@ char **parsing_cmd(char *buff, char *buff_copy)
 	{
 		argv[i] = malloc(sizeof(char) * (_strlen(token) + 1));
 		_strcpy(argv[i], token);
-		token = strtok(NULL, s);
+		token = _strtok(NULL, s);
 	}
 	argv[i] = NULL;
 
