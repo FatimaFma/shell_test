@@ -23,17 +23,23 @@ char **parsing_cmd(char *buff, char *buff_copy)
 	token_count++;
 	argv = malloc(sizeof(char *) * token_count);
 	token = _strtok(buff_copy, s);
-	if (token == NULL)
+	if (argv == NULL)
+	{
+		free(buff);
 		for (i = 1 ; argv[i] ; i++)
 			free(argv[i]);
+		free(argv);
+	}
 	for (i = 0; i < token_count - 1; i++)
 	{
 		argv[i] = malloc(sizeof(char) * (_strlen(token) + 1));
+		if (argv[i] == NULL )
+			for (i = 1 ; argv[i] ; i++)
+				free(argv[i]);
 		_strcpy(argv[i], token);
 		token = _strtok(NULL, s);
 	}
 	argv[i] = NULL;
-
 	free(buff_copy);
 	return (argv);
 }

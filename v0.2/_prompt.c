@@ -15,7 +15,7 @@ int main(__attribute__((unused))int ac, char **argv)
 	char *buff_copy = NULL;
 	size_t n = 0;
 	ssize_t characters;
-	/*int i = 0;*/
+	int i = 0;
 
 	while (1)
 	{
@@ -27,6 +27,7 @@ int main(__attribute__((unused))int ac, char **argv)
 		if (characters == -1)
 		{
 			write(1, "Exiting shell....\n", 19);
+			free(buff);
 			exit(0);
 		}
 		if (_e_check(buff))
@@ -45,29 +46,40 @@ int main(__attribute__((unused))int ac, char **argv)
 		{
 			free(buff_copy);
 			free(buff);
+			for (i = 1; argv[i] != NULL; i++)
+				free(argv[i]);
 			exit(0);
 			break;
 		}
 		else if (_strcmp(buff_copy, "env\n") == 0)
 		{
-			int i = 0;
-
+			i = 0;
 			while (environ[i])
 			{
 				write(1, environ[i], _strlen(environ[i]));
 				write(1, "\n", 1);
 				i++;
 			}
+			free(buff_copy);
 			continue;
 		}
 		else
 		{
 			argv = parsing_cmd(buff, buff_copy);
+			if (argv == NULL)
+			{
+				for (i = 1; argv[i] != NULL; i++)
+					free(argv[i]);
+				free(buff_copy);
+				free(buff);
+			}
 			execve_cmd(argv);
 		}
 	}
 	free(buff_copy);
 	free(buff);
+	for (i = 1; argv[i] != NULL; i++)
+		free(argv[i]);
 	free(argv);
 	return (0);
 }

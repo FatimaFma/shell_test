@@ -30,6 +30,7 @@ void execve_cmd(char **argv)
 				{
 					for (i = 1; argv[i] != NULL; i++)
 						free(argv[i]);
+					free(real_command);
 					perror("Error");
 					exit(EXIT_FAILURE);
 				}
