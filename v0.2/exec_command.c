@@ -21,7 +21,7 @@ void execve_cmd(char **argv)
 			for (i = 1; argv[i]; i++)
 				free(argv[i]);
 		}
-			free(real_command);
+		/*free(real_command);*/
 		if (real_command != NULL)
 		{
 			pid = fork();

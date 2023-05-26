@@ -15,13 +15,14 @@ int main(__attribute__((unused))int ac, char **argv)
 	char *buff_copy = NULL;
 	size_t n = 0;
 	ssize_t characters;
-	int i = 0;
+	int i = 0, j = 0;
 
 	while (1)
 	{
 		if (isatty(0))
 		{
 			write(1, "$cisnotfun ", 11);
+			
 		}
 		characters = getline(&buff, &n, stdin);
 		if (characters == -1)
@@ -45,7 +46,7 @@ int main(__attribute__((unused))int ac, char **argv)
 		{
 			free(buff_copy);
 			free(buff);
-			if (argv)
+			if (j)
 			{
 				for (i = 0 ; argv[i] ; i++)
 					free(argv[i]);
@@ -59,10 +60,17 @@ int main(__attribute__((unused))int ac, char **argv)
 			argv = parsing_cmd(buff, buff_copy);
 			if (argv == NULL)
 			{
-			for (i = 1 ; argv[i] ; i++)
-				free(argv[i]);
+			  j = 1;
+			  continue;
 			}
 			execve_cmd(argv);
+			for (i = 0 ; argv[i] ; i++)
+			  {
+			    printf("argv[%d] => %s\n", i, argv[i]);
+			    free(argv[i]);
+			  }
+			free(argv);
+			j = 0;
 		}
 	}
 	free(buff_copy);
