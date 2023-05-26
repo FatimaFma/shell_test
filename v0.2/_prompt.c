@@ -51,6 +51,7 @@ int main(__attribute__((unused))int ac, char **argv)
 		else if (_strcmp(buff_copy, "env\n") == 0)
 		{
 			int i = 0;
+
 			while (environ[i])
 			{
 				write(1, environ[i], _strlen(environ[i]));
