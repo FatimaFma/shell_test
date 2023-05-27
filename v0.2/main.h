@@ -15,7 +15,7 @@
 
 /* Functions */
 char **parsing_cmd(char *buff, char *buff_copy);
-void execve_cmd(char **argv);
+int execve_cmd(char **argv);
 char *get_path(char *command);
 char *_getenv(const char *name);
 unsigned int d_isdelim(char c, const char *d);

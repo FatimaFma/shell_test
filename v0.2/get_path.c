@@ -23,7 +23,10 @@ char *get_path(char *command)
 			dir_len = _strlen(path_token);
 			fpath = malloc(len + dir_len + 2);
 			if (fpath == NULL)
+			{
 				free(fpath);
+				return (NULL);
+			}
 			_strcpy(fpath, path_token);
 			_strcat(fpath, "/");
 			_strcat(fpath, command);
@@ -39,9 +42,13 @@ char *get_path(char *command)
 				path_token = _strtok(NULL, ":");
 			}
 		}
+		if (command[0] == '/')
+		{
+			free(path_copy);
+			if (stat(command, &buffer) == 0)
+				return (_strdup(command));
+		}
 		free(path_copy);
-		if (stat(command, &buffer) == 0)
-			return (command);
 		return (NULL);
 	}
 	return (NULL);

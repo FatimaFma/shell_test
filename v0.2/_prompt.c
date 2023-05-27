@@ -15,7 +15,7 @@ int main(__attribute__((unused))int ac, char **argv)
 	char *buff_copy = NULL;
 	size_t n = 0;
 	ssize_t characters;
-	int i = 0;
+	int i = 0, r_val;
 
 	while (1)
 	{
@@ -27,7 +27,6 @@ int main(__attribute__((unused))int ac, char **argv)
 		characters = getline(&buff, &n, stdin);
 		if (characters == -1)
 		{
-			write(1, "Exiting shell....\n", 19);
 			free(buff);
 			exit(0);
 		}
@@ -69,19 +68,16 @@ int main(__attribute__((unused))int ac, char **argv)
 		else
 		{
 			argv = parsing_cmd(buff, buff_copy);
-			if (argv == NULL)
+			r_val = execve_cmd(argv);
+			if (r_val == 1)
 			{
-			  /*print error message*/
-			  continue;
-			}
-			execve_cmd(argv);
 			for (i = 0 ; argv[i] ; i++)
 			  {
-			    printf("argv[%d] => %s\n", i, argv[i]);
 			    free(argv[i]);
 			  }
-			free(argv);
+			}
 		}
+		free(argv);
 	}
 	free(buff_copy);
 	free(buff);

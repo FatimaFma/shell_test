@@ -3,8 +3,9 @@
 /**
  * execve_cmd - function to execute the command.
  * @argv: array of strings holds commands
+ * Return: 1 if NULL
  */
-void execve_cmd(char **argv)
+int execve_cmd(char **argv)
 {
 	char *command = NULL;
 	char *real_command = NULL;
@@ -18,10 +19,10 @@ void execve_cmd(char **argv)
 		if (real_command == NULL)
 		{
 			free(real_command);
-			for (i = 1; argv[i]; i++)
+			for (i = 0; argv[i]; i++)
 				free(argv[i]);
+			return (0);
 		}
-		/*free(real_command);*/
 		if (real_command != NULL)
 		{
 			pid = fork();
@@ -43,4 +44,5 @@ void execve_cmd(char **argv)
 		}
 		free(real_command);
 	}
+	return (1);
 }
